@@ -41,6 +41,9 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          - name: web-xml
+            mountPath: /usr/local/tomcat/conf/web.xml
+            subPath: web.xml
           readinessProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
@@ -68,3 +71,8 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+      - name: web-xml
+        configMap:
+          name: {{ template "content-services.shortname" . }}-repository-catalina-configmap
+
+
