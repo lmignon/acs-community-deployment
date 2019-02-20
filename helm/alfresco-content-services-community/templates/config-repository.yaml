@@ -23,12 +23,20 @@ data:
   ALFRESCO_OPTS: " -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
+      -Dalfresco.restApi.basicAuthScheme=true
+      -Dopencmis.context.override=true
+      -Dopencmis.context.value=
+      -Dopencmis.servletpath.override=true
+      -Dopencmis.servletpath.value=
+      -Dopencmis.server.override=true
       {{ if or (eq $alfport "80") (eq $alfport "443") }}
       -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}/alfresco/aos
+      -Dopencmis.server.value={{ $alfprotocol }}://{{ $alfhost }}/alfresco/api/
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}/.*
       {{ else }}
       -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/alfresco/aos
+      -Dopencmis.server.value={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/alfresco/api/
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
       {{ end }}
