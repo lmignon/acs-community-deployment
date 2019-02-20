@@ -1,0 +1,11 @@
+helm tiller start alfresco6
+helm install . --namespace=alfresco6 -f values.yaml  -f test.yaml  --name deploy-test --set externalProtocol="https" --set externalHost="alfresco6.acscloud-6.acsone.eu"
+helm upgrade deploy-test . --reuse-values -f values.yaml -f test.yaml 
+helm tiller stop
+helm del --purge deploy-test
+
+
+
+If you have a specific DNS address for the cluster please run the following commands to get the application paths and configure ACS:
+
+helm upgrade --reuse-values deploy-test --set externalProtocol="http" --set externalHost="domain.com" --set externalPort="80" alfresco-incubator/alfresco-content-services-community
